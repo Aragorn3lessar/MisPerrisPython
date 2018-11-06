@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from .models import Estado,Mascota,Raza,Region,Ciudad,Socio,Vivienda,TipoUser
+from .models import Estado,Mascota,Raza,Region,Ciudad,Socio,Vivienda,TipoUser,Mascota_Adoptante
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
+import hashlib
 @login_required
 # Create your views here.
 
 def logoutM(request):
     auth.logout(request)
-    return render(request,'core/loginM.htm')
+    return render(request,'core/home.htm')
 
 def loginM(request):
     if request.POST:
@@ -18,7 +18,7 @@ def loginM(request):
         user=auth.authenticate(username=usu,password=pas)
         if user is not None and user.is_active:
             auth.login(request,user)
-            return render(request,'core/formularioM.htm',{'usuario':user.username})
+            return render(request,'core/listar.htm',{'usuario':user.username})
         else:
             return render(request,'core/error.htm')
 
@@ -26,7 +26,7 @@ def loginM(request):
 
 def logoutS(request):
     auth.logout(request)
-    return render(request,'core/loginS.htm')
+    return render(request,'core/home.htm')
 
 def loginS(request):
     if request.POST:
@@ -35,7 +35,7 @@ def loginS(request):
         use=auth.authenticate(username=us,password=pa)
         if use is not None and use.is_active:
             auth.login(request,use)
-            return render(request,'core/formularioS.htm',{'usuario':use.username})
+            return render(request,'core/listarS.htm',{'usuario':use.username})
         else:
             return render(request,'core/error.htm')
 
@@ -53,9 +53,42 @@ def intermedio(request):
 #file para imagenes
 
 @login_required
+def listarAsig(request):
+    masado=Mascota_Adoptante.objects.all()
+    return render(request,'core/listarMasF.htm',{'masado':masado})
+
+
+def asignar(request):
+    mas = Mascota.objects.filter(estado = "disponible")
+    est=Estado.objects.all()
+    if request.POST:
+        accion=request.POST.get("btnAccion","")
+        mensaje=""
+        if accion == "Buscar":
+            code=request.POST.get("code","")
+            ma=Mascota.objects.get(name=code)
+            return render(request,'core/asignar_m.htm',{'mascotas':mas,'estados':est,'ma':ma,'mensaje':mensaje})
+        if accion == "Asignar":
+            id_mascota=request.POST.get("code","")
+            rut=request.POST.get("txtRun","")
+            obj_rut=Socio.objects.get(name=rut)
+            obj_id=Mascota.objects.get(name=id_mascota)
+            adoptado=Estado.objects.get(name="adoptado")
+            asig = Mascota_Adoptante(
+                id_socio=obj_rut,
+                id_mascota=obj_id,
+            )
+            asig.save()
+            obj_id.estado=adoptado
+            obj_id.save()
+    return render(request,'core/asignar_m.htm',{'mascotas':mas,'estados':est})
+
+
+@login_required
 def listarS(request):
     sos=Socio.objects.all()
     return render(request,'core/listarS.htm',{'socios':sos})
+
 @login_required
 def eliminarS(request):
     sos=Socio.objects.all()
@@ -66,7 +99,8 @@ def eliminarS(request):
         so.delete()
         resp=True
     return render(request,'core/eliminarS.htm',{'socios':sos,'respuesta':resp})
-@login_required
+
+
 def formularioS(request):
     reg=Region.objects.all()
     ciu=Ciudad.objects.all()
@@ -104,12 +138,9 @@ def formularioS(request):
             contrasena=contrasena,
             tipo_user=tipo_user,
         )
-        us=User(
-            username=rut,
-            password=contrasena
-        )
-        us.save()
         sos.save()
+        User.objects.create_user(username=rut,password=contrasena)
+        
         resp=True
 
     return render(request,'core/formularioS.htm',{'regiones':reg,'ciudades':ciu,'tipo_viviendas':tivi,'tipo_usuarios':tius ,'respuesta':resp})
@@ -159,10 +190,21 @@ def eliminar(request):
 
 @login_required
 def listar(request):
-    mas=Mascota.objects.all()
-    return render(request,'core/listar.htm',{'mascotas':mas})
+    mas = Mascota.objects.all()
+    return render(request, 'core/listar.htm', {'mascotas': mas})
+
+@login_required
+def listarAdop(request):
+    mas2 = Mascota.objects.filter(estado = "adoptado")
+    return render(request, 'core/listar.htm', {'mascotas': mas2})
+
+@login_required
+def listarDisp(request):
+    mas3 = Mascota.objects.filter(estado = "disponible")
+    return render(request, 'core/listar.htm', {'mascotas': mas3})
 
 
+@login_required
 def formulario(request):
     esta=Estado.objects.all()
     raz=Raza.objects.all()

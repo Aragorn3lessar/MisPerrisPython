@@ -18,7 +18,7 @@ listado de mascotas
         {% for m in mascotas %}
         <tr>
             <td>{{m.name}}</td>
-            <td><img class="img-listado" src='{% static ''%}{{m.foto}}'></td>
+            <td><img class="img-listado" src=' {% static 'media/' %}{{m.foto}} '></td>
             <td>{{m.nombre}}</td>
             <td>{{m.raza}}</td>
             <td>{{m.descripcion}}</td>

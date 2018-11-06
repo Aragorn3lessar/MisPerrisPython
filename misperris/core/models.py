@@ -66,3 +66,7 @@ class Mascota(models.Model):
 
     def __str__(self):
         return self.name
+
+class Mascota_Adoptante(models.Model):
+    id_socio=models.ForeignKey(Socio,on_delete=models.CASCADE)
+    id_mascota=models.ForeignKey(Mascota,on_delete=models.CASCADE,  primary_key=True)

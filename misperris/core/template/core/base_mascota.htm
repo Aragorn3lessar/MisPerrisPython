@@ -4,17 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/hoja.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="main.js"></script>
-    <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/jquery.fancybox.js"></script>
-         <link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css" media="screen" />
-        <script src="js/slider.js"></script>
         <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.4.1/jquery.fancybox.min.js"></script>
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/css/estilos.css' %}">
@@ -34,19 +27,23 @@
         <nav>
                 
                    <ul>
-                        <li><a href="{% url 'logoutM' %}">Logout</a></li>
+                        <li><a href="{% url 'logoutM' %}">Salir</a></li>
+                        <li><a href="{% url 'asigM' %}">Asignar</a></li>
                         <li><a href="{% url 'forM' %}">Agregar</a></li>
-                        <li><a href="{% url 'listM' %}">Listar</a></li>
+                        <li><a href="{% url 'listM' %}">Listar-Todos</a></li>
+                        <li><a href="{% url 'adopM' %}">Listar-Adoptados</a></li>
+                        <li><a href="{% url 'dispM' %}">Listar-Disponibles</a></li>
+                        <li><a href="{% url 'masado' %}">Listar-Asignaciones</a></li>
                         <li><a href="{% url 'modM' %}">Modificar</a></li>
                         <li><a href="{% url 'eliM' %}">Eliminar</a></li>
-                
+                    </ul>
                 
                         <div class='Container'>
                         <div class="header" id="myHeader">
                         <img class='Logo' src="{% static 'core/img/logo.png' %}" alt="Logo">
                         </div>      
                         </div>        
-                    </ul>
+                    
             </nav>
             
     {% block contenedor %}

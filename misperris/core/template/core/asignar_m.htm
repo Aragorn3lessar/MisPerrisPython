@@ -10,12 +10,12 @@ Pagina inicial
                 
                 <thead>
                     <tr>
-                        <th>Formulario de Ingreso de Mascoras</th>                        
+                        <th>Adopción de Mascotas</th>                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Id:</td>
+                        <td>Id Mascota:</td>
                         <td>
                             <select name="code">
                                 {% for m in mascotas %}
@@ -32,12 +32,18 @@ Pagina inicial
                     <tr>
                         <td>Foto:</td>
                         <td>
-                            <input type="image" name="foto" value="{{ma.foto}}" />
+                            <img class="img-listado" src='{% static 'media/' %}{{ma.foto}}'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Rut Adoptante:</td>
+                        <td>
+                            <input type="text" name="txtRun"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input class="w3-input" type="submit" value="Modificar" />
+                            <input class="w3-input" type="submit" name="btnAccion" value="Asignar" />
                             <input class="w3-input" type="reset" value="Limpiar" />
                         </td>                        
                     </tr>
