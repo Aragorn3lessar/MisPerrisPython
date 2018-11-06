@@ -1,0 +1,23 @@
+{% extends 'core/base_mascota.htm' %}
+{% block titulo %}
+eliminar mascota
+{% endblock%}
+{% block contenedor %}
+    <h1>Eliminar Mascota</h1>
+    <form method="POST">
+        <table class="tableIngresar" border="1">
+            {% csrf_token %}
+            Seleccione Mascota a eliminar:
+            <select name="code">
+                {% for m in mascotas %}
+                <option>{{m.name}}</option>
+                {% endfor %}
+            </select> <br>
+            <input class="w3-input" type="submit" value="Eliminar"/>
+        </table>
+    </form>
+    {% if respuesta %}
+        <h1>Elimino</h1>
+    {% endif %}
+    <a href="{% url 'home' %}">Volver</a>
+{% endblock%}

@@ -1,0 +1,22 @@
+{% extends 'core/base_socio.htm' %}
+{% block titulo %}
+eliminar mascota
+{% endblock%}
+{% block contenedor %}
+    <h1>Eliminar Socio</h1>
+    <form method="POST">
+        <table class="tableIngresar" border="1">
+            {% csrf_token %}
+            Seleccione Socio a eliminar:
+            
+                <input type="text" name="code" value="{{so.name}}" />
+            
+             <br>
+            <input class="w3-input" type="submit" value="Eliminar"/>
+        </table>
+    </form>
+    {% if respuesta %}
+        <h1>Elimino</h1>
+    {% endif %}
+    <a href="{% url 'home' %}">Volver</a>
+{% endblock%}

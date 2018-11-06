@@ -1,0 +1,36 @@
+{% extends 'core/base.htm' %}
+{% block titulo %}
+Pagina inicial 
+{% endblock %}
+{% block contenedor %}
+    {% load static %}
+<form method="POST">
+    {% csrf_token%}
+    <table class="tableRegistrar">
+        <thead>
+            <tr>
+                <th>
+                    Inicie Sesión para gestion de Mascotas
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Rut:</td>
+                <td>
+                    <input type="text" name="txtRun" value="" placeholder="rut sin puntos y con güion" required/> 
+                </td>
+            </tr>
+            <tr>
+                <td>Contraseña:</td>
+                <td>
+                    <input type="password" name="txtPass" value="" placeholder="" required/> 
+                </td>
+            </tr>
+            <tr>
+                <td><button type="submit">Validar</button></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+{% endblock %}
